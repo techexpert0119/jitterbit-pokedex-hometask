@@ -1,0 +1,27 @@
+<input
+  type="text"
+  [(ngModel)]="searchTerm"
+  placeholder="Search Pokemon"
+  (keypress)="onKeyPress($event)"
+/>
+<button (click)="searchPokemon()">Search</button>
+<button *ngIf="hasSearched" (click)="clearSearch()">Clear</button>
+
+<div *ngIf="hasSearched && searchResults.length === 0 && !isSearching">
+  No result
+</div>
+
+<div *ngIf="hasSearched">
+  <div *ngFor="let pokemon of searchResults">
+    <a [routerLink]="['/details', pokemon.name]">{{ pokemon.name }}</a>
+  </div>
+  <div *ngIf="isSearching">Loading...</div>
+</div>
+
+<div *ngIf="!hasSearched">
+  <div *ngFor="let pokemon of pokemons">
+    <a [routerLink]="['/details', pokemon.name]">{{ pokemon.name }}</a>
+  </div>
+  <div *ngIf="isLoadingList">Loading...</div>
+  <button *ngIf="!isLoadingList" (click)="loadMore()">Load More</button>
+</div>
