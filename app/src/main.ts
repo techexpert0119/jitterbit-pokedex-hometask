@@ -1,6 +1,6 @@
-import { platformBrowser } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { PokedexAppModule } from './app/pokedex-app.module';
 
-platformBrowser()
+platformBrowserDynamic()
   .bootstrapModule(PokedexAppModule)
   .catch((err) => console.error(err));
