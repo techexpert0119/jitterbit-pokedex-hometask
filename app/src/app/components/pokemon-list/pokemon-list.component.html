@@ -1,27 +1,70 @@
-<input
-  type="text"
-  [(ngModel)]="searchTerm"
-  placeholder="Search Pokemon"
-  (keypress)="onKeyPress($event)"
-/>
-<button (click)="searchPokemon()">Search</button>
-<button *ngIf="hasSearched" (click)="clearSearch()">Clear</button>
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    margin-top: 16px;
+  "
+>
+  <mat-form-field appearance="outline" style="flex: 1; margin-right: 8px">
+    <mat-label>Search Pokemon</mat-label>
+    <input matInput [(ngModel)]="searchTerm" (keypress)="onKeyPress($event)" />
+  </mat-form-field>
+  <div style="display: flex; align-items: center">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="searchPokemon()"
+      style="margin-right: 8px"
+    >
+      Search
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      *ngIf="hasSearched"
+      (click)="clearSearch()"
+    >
+      Clear
+    </button>
+  </div>
+</div>
 
 <div *ngIf="hasSearched && searchResults.length === 0 && !isSearching">
-  No result
+  <mat-card-content> No result </mat-card-content>
 </div>
 
 <div *ngIf="hasSearched">
-  <div *ngFor="let pokemon of searchResults">
-    <a [routerLink]="['/details', pokemon.name]">{{ pokemon.name }}</a>
+  <div class="pokemon-list">
+    <mat-card *ngFor="let pokemon of searchResults" class="pokemon-card">
+      <a mat-button color="primary" [routerLink]="['/details', pokemon.name]">{{
+        pokemon.name
+      }}</a>
+    </mat-card>
   </div>
-  <div *ngIf="isSearching">Loading...</div>
+  <div class="spinner-container">
+    <mat-spinner *ngIf="isSearching"></mat-spinner>
+  </div>
 </div>
 
 <div *ngIf="!hasSearched">
-  <div *ngFor="let pokemon of pokemons">
-    <a [routerLink]="['/details', pokemon.name]">{{ pokemon.name }}</a>
+  <div class="pokemon-list">
+    <mat-card *ngFor="let pokemon of pokemons" class="pokemon-card">
+      <a mat-button color="primary" [routerLink]="['/details', pokemon.name]">{{
+        pokemon.name
+      }}</a>
+    </mat-card>
   </div>
-  <div *ngIf="isLoadingList">Loading...</div>
-  <button *ngIf="!isLoadingList" (click)="loadMore()">Load More</button>
+  <div class="spinner-container">
+    <mat-spinner *ngIf="isLoadingList"></mat-spinner>
+  </div>
+  <button
+    mat-raised-button
+    color="accent"
+    *ngIf="!isLoadingList"
+    (click)="loadMore()"
+    style="display: block; margin: 16px auto"
+  >
+    Load More
+  </button>
 </div>

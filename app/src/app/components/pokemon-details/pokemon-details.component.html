@@ -1,16 +1,39 @@
-<div *ngIf="isLoading">Loading...</div>
+<mat-card *ngIf="isLoading">
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</mat-card>
 
-<div *ngIf="!isLoading && pokemon">
-  <h2>{{ pokemon.name }}</h2>
-  <p><img [src]="pokemon.sprites.front_default" alt="{{ pokemon.name }}" /></p>
-  <p>Experience: {{ pokemon.base_experience }}</p>
-  <p>Height: {{ pokemon.height }}</p>
-  <p>Weight: {{ pokemon.weight }}</p>
-  <p>Order: {{ pokemon.order }}</p>
-</div>
+<mat-card *ngIf="!isLoading && pokemon">
+  <mat-card-header>
+    <mat-card-title>{{ pokemon.name }}</mat-card-title>
+  </mat-card-header>
+  <img
+    mat-card-image
+    [src]="pokemon.sprites.front_default"
+    alt="{{ pokemon.name }}"
+    style="width: auto; max-width: 200px; display: block; margin: 0 auto"
+  />
+  <mat-card-content>
+    <p>Experience: {{ pokemon.base_experience }}</p>
+    <p>Height: {{ pokemon.height }}</p>
+    <p>Weight: {{ pokemon.weight }}</p>
+    <p>Order: {{ pokemon.order }}</p>
+  </mat-card-content>
+  <mat-card-actions style="justify-content: center">
+    <button mat-raised-button color="primary" (click)="goBack()">
+      Back to Main Page
+    </button>
+  </mat-card-actions>
+</mat-card>
 
-<div *ngIf="!isLoading && !pokemon">
-  <p>No Pokemon details available.</p>
-</div>
-
-<p><button (click)="goBack()">Back to Main Page</button></p>
+<mat-card *ngIf="!isLoading && !pokemon">
+  <mat-card-content>
+    <p>No Pokemon details available.</p>
+  </mat-card-content>
+  <mat-card-actions style="justify-content: center">
+    <button mat-raised-button color="primary" (click)="goBack()">
+      Back to Main Page
+    </button>
+  </mat-card-actions>
+</mat-card>
